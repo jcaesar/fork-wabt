@@ -97,6 +97,7 @@ include(CheckIncludeFile)
 include(CheckSymbolExists)
 
 check_include_file("alloca.h" HAVE_ALLOCA_H)
+check_include_file("setjmp.h" HAVE_SETJMP_H)
 check_include_file("unistd.h" HAVE_UNISTD_H)
 check_symbol_exists(snprintf "stdio.h" HAVE_SNPRINTF)
 check_symbol_exists(strcasecmp "strings.h" HAVE_STRCASECMP)
@@ -409,6 +410,12 @@ if (WABT_INSTALL_RULES)
 endif ()
 
 add_library(wasm-rt-impl STATIC wasm2c/wasm-rt-impl.c wasm2c/wasm-rt-impl.h)
+target_include_directories(
+  wasm-rt-impl
+  PUBLIC
+  "$<BUILD_INTERFACE:${WABT_SOURCE_DIR}/include>"
+  "$<BUILD_INTERFACE:${WABT_BINARY_DIR}/include>"
+)
 add_library(wabt::wasm-rt-impl ALIAS wasm-rt-impl)
 if (WABT_BIG_ENDIAN)
   target_compile_definitions(wasm-rt-impl PUBLIC WABT_BIG_ENDIAN=1)

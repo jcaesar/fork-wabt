@@ -97,7 +97,11 @@ void wasm_rt_load_exception(const wasm_rt_tag_t tag,
 }
 
 WASM_RT_NO_RETURN void wasm_rt_throw(void) {
+#ifdef WASM_RT_TRAP_HANDLER
+  WASM_RT_TRAP_HANDLER(WASM_RT_TRAP_UNCAUGHT_EXCEPTION)
+#else
   WASM_RT_LONGJMP(*g_unwind_target, WASM_RT_TRAP_UNCAUGHT_EXCEPTION);
+#endif
 }
 
 WASM_RT_UNWIND_TARGET* wasm_rt_get_unwind_target(void) {

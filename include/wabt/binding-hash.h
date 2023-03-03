@@ -17,6 +17,8 @@
 #ifndef WABT_BINDING_HASH_H_
 #define WABT_BINDING_HASH_H_
 
+#include <stdio.h>
+#include <sys/stat.h>
 #include <functional>
 #include <string>
 #include <string_view>

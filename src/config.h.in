@@ -32,6 +32,9 @@
 /* Whether <unistd.h> is available */
 #cmakedefine01 HAVE_UNISTD_H
 
+/* Whether setjmp/longjmp are available */
+#cmakedefine01 HAVE_SETJMP_H
+
 /* Whether snprintf is defined by stdio.h */
 #cmakedefine01 HAVE_SNPRINTF
 

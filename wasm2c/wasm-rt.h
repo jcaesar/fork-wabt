@@ -17,7 +17,14 @@
 #ifndef WASM_RT_H_
 #define WASM_RT_H_
 
+#include "wabt/config.h"
+
+#if HAVE_SETJMP_H
 #include <setjmp.h>
+#else
+#define WASM_RT_TRAP_HANDLER(code) exit(-1);
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -289,8 +296,10 @@ WASM_RT_NO_RETURN void wasm_rt_throw(void);
 typedef struct {
   /* Is the jmp buf intialized? */
   bool initialized;
+#ifndef WASM_RT_TRAP_HANDLER
   /* jmp_buf contents */
   jmp_buf buffer;
+#endif
 } wasm_rt_jmp_buf;
 
 /**
